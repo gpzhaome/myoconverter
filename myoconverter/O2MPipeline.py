@@ -42,9 +42,12 @@ def O2MPipeline(osim_file, geometry_folder, output_folder, **kwargs):
     MODEL_NAME = os.path.split(osim_file)[1][:-5]
     OUTPUT_LOG_FILE = os.path.join(output_folder, f"{MODEL_NAME}_conversion.log")
 
-    # If there is an existing log file, remove it
+    # If there is an existing log file, remove it when possible.
     if os.path.exists(OUTPUT_LOG_FILE):
-        os.remove(OUTPUT_LOG_FILE)
+        try:
+            os.remove(OUTPUT_LOG_FILE)
+        except PermissionError:
+            logger.warning(f"Could not remove existing log file because it is in use: {OUTPUT_LOG_FILE}")
 
     # Set the log file
     logger.add(OUTPUT_LOG_FILE)

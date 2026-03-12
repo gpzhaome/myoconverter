@@ -143,21 +143,29 @@ def fmOptPSO_cust(mjc_model_path, muscle, joints, jnt_arr, act_arr,\
 
     shared_model = mujoco.MjModel.from_xml_path(mjc_model_path)
 
-    with mp.Pool(initializer=initializeWorker, initargs=(shared_model,)) as pool:
-        
+    def evaluate_objectives(x_values, pool=None):
+        x_input = []
+        for ix in x_values:
+            x_input.append((ix, osim_fm, muscle, joints, jnt_arr, act_arr))
+
+        if pool is not None:
+            return pool.starmap(objFMMuscle, x_input)
+
+        initializeWorker(shared_model)
+        return [objFMMuscle(*args) for args in x_input]
+
+    try:
+        pool_context = mp.Pool(initializer=initializeWorker, initargs=(shared_model,))
+        logger.info("        Using multiprocessing for muscle force optimization")
+    except (PermissionError, OSError) as exc:
+        logger.warning(f"        Multiprocessing unavailable, falling back to serial optimization: {exc}")
+        pool_context = None
+
+    try:
         while itera < iteration_max:
 
-            # Apply parallel computing using multiprocessing
-            # Right now, the mujoco sim cannot be pickled and transfer to objective function
-            # To solve this, mujoco file name need to transfer to objective function and load over there.
-            # This will change the entire strucutre of the optimization process, not a day of work. 
-
-            # prepare function inputs
-            x_input = []
-            for ix in x:
-                x_input.append((ix, osim_fm, muscle, joints, jnt_arr, act_arr))
-
-            obj_list = pool.starmap(objFMMuscle, x_input)
+            # Apply parallel computing using multiprocessing when available.
+            obj_list = evaluate_objectives(x, pool_context)
             
             # update the local and global optimal
             if itera == 0:
@@ -208,6 +216,10 @@ def fmOptPSO_cust(mjc_model_path, muscle, joints, jnt_arr, act_arr,\
             if obj_g_iter > 10:
                 logger.info("        Break the optimization, since global obj maintained the same value for certain iterations")
                 break
+    finally:
+        if pool_context is not None:
+            pool_context.close()
+            pool_context.join()
         
     # update mjc model with new muscle parameters
     shared_model = updateMuscleForceProperties(shared_model, muscle, g)

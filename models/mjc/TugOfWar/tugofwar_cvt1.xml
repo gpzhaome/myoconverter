@@ -6,7 +6,6 @@
   <compiler inertiafromgeom="auto" angle="radian" balanceinertia="true" boundmass="0.001" boundinertia="0.001" inertiagrouprange="0 1">
     <lengthrange inttotal="50" useexisting="true"/>
   </compiler>
-  <option collision="predefined"/>
   <visual>
     <scale framelength="0.5" framewidth="0.01"/>
   </visual>
@@ -36,7 +35,7 @@
       <site name="muscle2_muscle2-point1" pos="0 0.050000000000000003 0.34999999999999998"/>
     </body>
     <light directional="true"/>
-    <body name="block" pos="0 1.11e-17 0.05" euler="1.571 0 0">
+    <body name="block" pos="0 0 0.05" euler="1.571 0 0">
       <inertial mass="20" pos="0 0 0" fullinertia="0.13333300000000001 0.13333300000000001 0.13333300000000001 0 0 0"/>
       <geom name="block_geom_1" type="mesh" mesh="block_geom_1_block" rgba="1 1 1 1" group="0"/>
       <joint name="block_tz" range="-0.1 0.1" limited="true" user="0.0" ref="0" type="slide" axis="-3.673e-06 0 1" damping="0" stiffness="0"/>
@@ -46,9 +45,9 @@
   </worldbody>
   <asset>
     <texture type="skybox" builtin="gradient" rgb1="1 1 1" rgb2="0.6 0.8 1" width="256" height="256"/>
-    <mesh name="ground_geom_2_block" file="Geometry/block.stl" scale="5 1 1"/>
-    <mesh name="ground_geom_3_block" file="Geometry/block.stl" scale="5 1 1"/>
-    <mesh name="block_geom_1_block" file="Geometry/block.stl" scale="1 1 1"/>
+    <mesh name="ground_geom_2_block" file="Geometry\block.stl" scale="5 1 1"/>
+    <mesh name="ground_geom_3_block" file="Geometry\block.stl" scale="5 1 1"/>
+    <mesh name="block_geom_1_block" file="Geometry\block.stl" scale="1 1 1"/>
   </asset>
   <tendon>
     <!-- Leave this comment here to make 'tendon' element pretty printed !-->

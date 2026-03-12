@@ -4,8 +4,44 @@ import numpy as np
 from numpy import pi
 import copy
 import itertools
-from myoconverter.optimization.utils.UtilsRotation import spherical2cartesian,\
-     quaternionRotaion, cylindarical2cartesian
+from myoconverter.optimization.utils.UtilsRotation import (
+    spherical2cartesian,
+    quaternionRotaion,
+    cylindarical2cartesian,
+)
+
+def _get_eq_active_mask(mjc_model):
+    if hasattr(mjc_model, 'eq_active'):
+        return mjc_model.eq_active == 1
+    if hasattr(mjc_model, 'eq_active0'):
+        return mjc_model.eq_active0 == 1
+    return np.ones(len(mjc_model.eq_type), dtype=bool)
+
+
+def _get_actuator_moment_matrix(mjc_model, mjc_data):
+    actuator_moment = mjc_data.actuator_moment
+
+    if actuator_moment.ndim == 2:
+        return actuator_moment
+
+    total_dofs = mjc_model.nu * mjc_model.nv
+    if actuator_moment.size == total_dofs:
+        return actuator_moment.reshape(mjc_model.nu, mjc_model.nv)
+
+    if all(hasattr(mjc_data, attr) for attr in ("moment_rowadr", "moment_rownnz", "moment_colind")):
+        dense = np.zeros((mjc_model.nu, mjc_model.nv), dtype=actuator_moment.dtype)
+        for row in range(mjc_model.nu):
+            row_start = mjc_data.moment_rowadr[row]
+            row_nnz = mjc_data.moment_rownnz[row]
+            row_end = row_start + row_nnz
+            cols = mjc_data.moment_colind[row_start:row_end]
+            dense[row, cols] = actuator_moment[row_start:row_end]
+        return dense
+
+    raise ValueError(
+        f"Unsupported actuator_moment shape {actuator_moment.shape} for model with "
+        f"nu={mjc_model.nu}, nv={mjc_model.nv}"
+    )
 
 # get all independed joint coordinate range
 def getCoordinateRange_mjc(mjc_model):
@@ -104,7 +140,7 @@ def calculateEndPoints_mjc(mjc_model_path, end_points, n_eval):
 def dependencyJointAng(mjc_model, free_jnt_id_array, jnt_ang_array):
     
     couplingJnt = mjc_model.eq_type == 2
-    activeEqu = mjc_model.eq_active == 1
+    activeEqu = _get_eq_active_mask(mjc_model)
     
     dependencyJntAngs = []
     dependencyJnts = []
@@ -157,7 +193,7 @@ def lockedJointAng(mjc_model):
     """
 
     # find locked constraints that satisfy all three conditions
-    lockedCons = np.logical_and(np.logical_and(mjc_model.eq_type == 2, mjc_model.eq_active == 1), mjc_model.eq_obj2id == -1)
+    lockedCons = np.logical_and(np.logical_and(mjc_model.eq_type == 2, _get_eq_active_mask(mjc_model)), mjc_model.eq_obj2id == -1)
 
     lockedJnts = []
     lockedJntAngs = []
@@ -384,7 +420,8 @@ def computeMomentArmMuscleJoints(mjc_model, muscle, joints, ang_ranges, evalN):
 
         mujoco.mj_step(mjc_model, mjc_data)
             
-        mom_arm_sub = mjc_data.actuator_moment[muscles_idx, joints_idx].copy()
+        actuator_moment = _get_actuator_moment_matrix(mjc_model, mjc_data)
+        mom_arm_sub = actuator_moment[muscles_idx, joints_idx].copy()
         
         # if dependencyJnts: 
         #     # if there are dependency joint, then calculate moment arm using
@@ -600,4 +637,8 @@ def updateMuscleForceProperties(mjc_model, muscle, res):
     mjc_model.actuator(muscle).gainprm[7] = res[2]
     
     return mjc_model
+
+
+
+
 

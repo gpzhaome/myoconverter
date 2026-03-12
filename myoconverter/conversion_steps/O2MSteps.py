@@ -163,11 +163,19 @@ class O2MSteps:
                             os.path.split(self.osim_model_file)[1][:-5] +\
                             '_cvt2.xml'
             
-            # First check if the cvt2 model is already exist. 
-            # If so, then directly optimize on top of it.
-            # Otherwise, optimize from cvt1 model and generate cvt2 model at the end.
-            # If cvt1 model does not exist either, then raise an error.
-            if os.path.exists(mjcModel_Cvt2_path):
+            # When conversion is enabled, always continue from cvt1 so stale cvt2 files
+            # from older MuJoCo versions do not get reused.
+            if self.convert:
+                logger.info("convert=True, start step 2 from xxx_cvt1")
+                if os.path.exists(mjcModel_Cvt1_path):
+                    cvt2_model_path = mjcModel_Cvt1_path
+                else:
+                    logger.debug("xxx_cvt1 model file does not exist either, stopped!")
+                    logger.debug("Please run [1] first to get the xxx_cvt1 model")
+                    raise('xxx_cvt1 model file does not exist, cannot process following' + 
+                        'steps .. \n')
+
+            elif os.path.exists(mjcModel_Cvt2_path):
                 logger.info("xxx_cvt2 model already exist, process from it")
                 cvt2_model_path = mjcModel_Cvt2_path
 
@@ -225,11 +233,19 @@ class O2MSteps:
                             os.path.split(self.osim_model_file)[1][:-5] +\
                             '_cvt3.xml'
             
-            # First check if the cvt2 model is already exist. 
-            # If so, then directly optimize on top of it.
-            # Otherwise, optimize from cvt1 model and generate cvt2 model at the end.
-            # If cvt1 model does not exist either, then raise an error.
-            if os.path.exists(mjcModel_Cvt3_path):
+            # When conversion is enabled, always continue from cvt2 so stale cvt3 files
+            # from older MuJoCo versions do not get reused.
+            if self.convert:
+                logger.info("convert=True, start step 3 from xxx_cvt2")
+                if os.path.exists(mjcModel_Cvt2_path):
+                    cvt3_model_path = mjcModel_Cvt2_path
+                else:
+                    logger.debug("xxx_cvt2 model file does not exist either, stopped!")
+                    logger.debug("Please run [2] first to get the xxx_cvt2 model")
+                    raise('xxx_cvt2 model file does not exist, cannot process following' + 
+                        'steps .. \n')
+
+            elif os.path.exists(mjcModel_Cvt3_path):
                 logger.info("xxx_cvt3 model already exist, process from it")
                 cvt3_model_path = mjcModel_Cvt3_path
 

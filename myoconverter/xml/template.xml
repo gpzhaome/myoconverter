@@ -6,7 +6,6 @@
             inertiagrouprange="0 1">
     <lengthrange inttotal="50" useexisting="true"/>
   </compiler>
-  <option collision="predefined"/>
   <visual>
     <scale framelength="0.5" framewidth="0.01"/>
   </visual>
@@ -47,3 +46,4 @@
     <!-- Leave this comment here to make 'contact' element pretty printed !-->
   </contact>
 </mujoco>
+

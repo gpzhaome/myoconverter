@@ -1,25 +1,31 @@
 <mujoco model="template">
-  <!-- This model has been converted from an OpenSim model. Model conversion by MyoConverter https://github.com/MyoHub/myoConverter. This model is licensed under Apache 2.0. -->
-  <compiler angle="radian" autolimits="true"/>
-  <option timestep="0.001" collision="predefined"/>
+  <!-- This model has been converted from an OpenSim model. Model conversion by MyoConverter https://github.com/MyoHub/myoconverter. This model is licensed under Apache 2.0. -->
+  <compiler angle="radian" boundmass="0.001" boundinertia="0.001"/>
+
+  <option timestep="0.001"/>
+
   <size njmax="1000" nconmax="400" nkey="1" nuser_jnt="1"/>
+
   <visual>
     <scale framelength="0.5" framewidth="0.01"/>
   </visual>
-  <default class="main">
+
+  <default>
     <joint limited="true" armature="1e-05" damping="0.05"/>
     <geom margin="0.001" rgba="0.8 0.6 0.4 1"/>
     <site size="0.001 0.005 0.005"/>
-    <tendon width="0.005" rgba="0.95 0.3 0.3 1"/>
+
+    <tendon limited="false" width="0.005" rgba="0.95 0.3 0.3 1"/>
     <default class="muscle">
-      <general ctrllimited="true" ctrlrange="0 1" dyntype="muscle" gaintype="muscle" biastype="muscle" dynprm="0.01 0.04 0 0 0 0 0 0 0 0" gainprm="0.75 1.05 -1 200 0.5 1.6 1.5 1.3 1.2 0" biasprm="0.75 1.05 -1 200 0.5 1.6 1.5 1.3 1.2 0"/>
+      <general ctrllimited="true" ctrlrange="0 1" dyntype="muscle" dynprm="0.01 0.04 0 0 0 0 0 0 0 0" gaintype="muscle" biastype="muscle" gainprm="0.75 1.05 -1 200 0.5 1.6 1.5 1.3 1.2" biasprm="0.75 1.05 -1 200 0.5 1.6 1.5 1.3 1.2"/>
     </default>
     <default class="motor">
-      <general gainprm="5 0 0 0 0 0 0 0 0 0"/>
+      <general gainprm="5"/>
     </default>
   </default>
+
   <asset>
-    <texture type="skybox" builtin="gradient" rgb1="1 1 1" rgb2="0.6 0.8 1" width="256" height="1536"/>
+    <texture type="skybox" colorspace="auto" builtin="gradient" rgb1="1 1 1" rgb2="0.6 0.8 1" width="256" height="1536"/>
     <mesh name="pelvis_geom_1_sacrum" file="Geometry/sacrum.stl"/>
     <mesh name="pelvis_geom_2_pelvis" file="Geometry/pelvis.stl"/>
     <mesh name="pelvis_geom_3_l_pelvis" file="Geometry/l_pelvis.stl"/>
@@ -40,8 +46,9 @@
     <mesh name="torso_geom_3_hat_skull" file="Geometry/hat_skull.stl"/>
     <mesh name="torso_geom_4_hat_ribs" file="Geometry/hat_ribs.stl"/>
   </asset>
+
   <worldbody>
-    <light pos="0 0 0" dir="0 0 -1" directional="true"/>
+    <light pos="0 0 0" dir="0 0 -1" type="directional"/>
     <body name="ground" quat="0.707035 0.707179 0 0">
       <geom name="ground-plane" size="10 10 0.125" quat="0.707035 -0.707179 0 0" type="plane" rgba="1 0.7 0.4 1"/>
     </body>
@@ -229,6 +236,7 @@
       </body>
     </body>
   </worldbody>
+
   <contact>
     <pair geom1="ground-plane" geom2="pelvis_geom_1"/>
     <pair geom1="ground-plane" geom2="pelvis_geom_2"/>
@@ -250,36 +258,38 @@
     <pair geom1="ground-plane" geom2="torso_geom_3"/>
     <pair geom1="ground-plane" geom2="torso_geom_4"/>
   </contact>
+
   <equality>
-    <joint joint1="knee_r_translation1" joint2="knee_angle_r" polycoef="-0.003639 -0.006267 0.002807 0.00134 -0.0006776" solimp="0.9999 0.9999 0.001 0.5 2"/>
-    <joint joint1="knee_r_translation2" joint2="knee_angle_r" polycoef="-0.3957 0.003413 -0.005587 0.0006697 0.0005674" solimp="0.9999 0.9999 0.001 0.5 2"/>
-    <joint joint1="knee_l_translation1" joint2="knee_angle_l" polycoef="-0.003639 -0.006267 0.002807 0.00134 -0.0006776" solimp="0.9999 0.9999 0.001 0.5 2"/>
-    <joint joint1="knee_l_translation2" joint2="knee_angle_l" polycoef="-0.3957 0.003413 -0.005587 0.0006697 0.0005674" solimp="0.9999 0.9999 0.001 0.5 2"/>
-    <joint joint1="iliopsoas_r_psoas_r-P3_x" joint2="hip_flexion_r" polycoef="-0.0288 0 0.00114 0 0" solimp="0.9999 0.9999 0.001 0.5 2"/>
-    <joint joint1="iliopsoas_r_psoas_r-P3_y" joint2="hip_flexion_r" polycoef="-0.0805 0 0.005359 0 0" solimp="0.9999 0.9999 0.001 0.5 2"/>
-    <joint joint1="iliopsoas_r_psoas_r-P3_z" joint2="hip_flexion_r" polycoef="0.0816 0 -0.0013 0 0" solimp="0.9999 0.9999 0.001 0.5 2"/>
-    <joint joint1="rect_fem_r_rect_fem_r-P3_x" joint2="knee_angle_r" polycoef="0.06259 0.04199 0.01152 -0.007248 -0.004008" solimp="0.9999 0.9999 0.001 0.5 2"/>
-    <joint joint1="rect_fem_r_rect_fem_r-P3_y" joint2="knee_angle_r" polycoef="0.02032 -0.01159 -0.008624 -0.002308 -0.0002292" solimp="0.9999 0.9999 0.001 0.5 2"/>
-    <joint joint1="vasti_r_vas_int_r-P3_y" joint2="knee_angle_r" polycoef="-0.2234 0.08578 0 0 0" solimp="0.9999 0.9999 0.001 0.5 2"/>
-    <joint joint1="vasti_r_vas_int_r-P3_z" joint2="knee_angle_r" polycoef="0.02673 0.01014 0 0 0" solimp="0.9999 0.9999 0.001 0.5 2"/>
-    <joint joint1="vasti_r_vas_int_r-P4_x" joint2="knee_angle_r" polycoef="0.05647 0.04555 0.01393 -0.007247 -0.004235" solimp="0.9999 0.9999 0.001 0.5 2"/>
-    <joint joint1="vasti_r_vas_int_r-P4_y" joint2="knee_angle_r" polycoef="0.02476 -0.006322 -0.00661 -0.003684 -0.0008973" solimp="0.9999 0.9999 0.001 0.5 2"/>
-    <joint joint1="gastroc_r_med_gas_r-P2_x" joint2="knee_angle_r" polycoef="-0.02915 -0.004849 0 0 0" solimp="0.9999 0.9999 0.001 0.5 2"/>
-    <joint joint1="gastroc_r_med_gas_r-P2_y" joint2="knee_angle_r" polycoef="-0.4015 -0.0041 0 0 0" solimp="0.9999 0.9999 0.001 0.5 2"/>
-    <joint joint1="gastroc_r_med_gas_r-P2_z" joint2="knee_angle_r" polycoef="-0.02562 -0.001014 0 0 0" solimp="0.9999 0.9999 0.001 0.5 2"/>
-    <joint joint1="iliopsoas_l_psoas_l-P3_x" joint2="hip_flexion_l" polycoef="-0.0288 0 0.00114 0 0" solimp="0.9999 0.9999 0.001 0.5 2"/>
-    <joint joint1="iliopsoas_l_psoas_l-P3_y" joint2="hip_flexion_l" polycoef="-0.0805 0 0.005359 0 0" solimp="0.9999 0.9999 0.001 0.5 2"/>
-    <joint joint1="iliopsoas_l_psoas_l-P3_z" joint2="hip_flexion_l" polycoef="-0.0816 0 0.0013 0 0" solimp="0.9999 0.9999 0.001 0.5 2"/>
-    <joint joint1="rect_fem_l_rect_fem_l-P3_x" joint2="knee_angle_l" polycoef="0.06259 0.04199 0.01152 -0.007248 -0.004008" solimp="0.9999 0.9999 0.001 0.5 2"/>
-    <joint joint1="rect_fem_l_rect_fem_l-P3_y" joint2="knee_angle_l" polycoef="0.02032 -0.01159 -0.008624 -0.002308 -0.0002292" solimp="0.9999 0.9999 0.001 0.5 2"/>
-    <joint joint1="vasti_l_vas_int_l-P3_y" joint2="knee_angle_l" polycoef="-0.2234 0.08578 0 0 0" solimp="0.9999 0.9999 0.001 0.5 2"/>
-    <joint joint1="vasti_l_vas_int_l-P3_z" joint2="knee_angle_l" polycoef="-0.02673 -0.01014 0 0 0" solimp="0.9999 0.9999 0.001 0.5 2"/>
-    <joint joint1="vasti_l_vas_int_l-P4_x" joint2="knee_angle_l" polycoef="0.05647 0.04555 0.01393 -0.007247 -0.004235" solimp="0.9999 0.9999 0.001 0.5 2"/>
-    <joint joint1="vasti_l_vas_int_l-P4_y" joint2="knee_angle_l" polycoef="0.02476 -0.006322 -0.00661 -0.003684 -0.0008973" solimp="0.9999 0.9999 0.001 0.5 2"/>
-    <joint joint1="gastroc_l_med_gas_l-P2_x" joint2="knee_angle_l" polycoef="-0.02915 -0.004849 0 0 0" solimp="0.9999 0.9999 0.001 0.5 2"/>
-    <joint joint1="gastroc_l_med_gas_l-P2_y" joint2="knee_angle_l" polycoef="-0.4015 -0.0041 0 0 0" solimp="0.9999 0.9999 0.001 0.5 2"/>
-    <joint joint1="gastroc_l_med_gas_l-P2_z" joint2="knee_angle_l" polycoef="0.02562 0.001014 0 0 0" solimp="0.9999 0.9999 0.001 0.5 2"/>
+    <joint joint1="knee_r_translation1" joint2="knee_angle_r" polycoef="-0.003639 -0.006267 0.002807 0.00134 -0.0006776" solimp="0.9999 0.9999"/>
+    <joint joint1="knee_r_translation2" joint2="knee_angle_r" polycoef="-0.3957 0.003413 -0.005587 0.0006697 0.0005674" solimp="0.9999 0.9999"/>
+    <joint joint1="knee_l_translation1" joint2="knee_angle_l" polycoef="-0.003639 -0.006267 0.002807 0.00134 -0.0006776" solimp="0.9999 0.9999"/>
+    <joint joint1="knee_l_translation2" joint2="knee_angle_l" polycoef="-0.3957 0.003413 -0.005587 0.0006697 0.0005674" solimp="0.9999 0.9999"/>
+    <joint joint1="iliopsoas_r_psoas_r-P3_x" joint2="hip_flexion_r" polycoef="-0.0288 0 0.00114 0 0" solimp="0.9999 0.9999"/>
+    <joint joint1="iliopsoas_r_psoas_r-P3_y" joint2="hip_flexion_r" polycoef="-0.0805 0 0.005359 0 0" solimp="0.9999 0.9999"/>
+    <joint joint1="iliopsoas_r_psoas_r-P3_z" joint2="hip_flexion_r" polycoef="0.0816 0 -0.0013 0 0" solimp="0.9999 0.9999"/>
+    <joint joint1="rect_fem_r_rect_fem_r-P3_x" joint2="knee_angle_r" polycoef="0.06259 0.04199 0.01152 -0.007248 -0.004008" solimp="0.9999 0.9999"/>
+    <joint joint1="rect_fem_r_rect_fem_r-P3_y" joint2="knee_angle_r" polycoef="0.02032 -0.01159 -0.008624 -0.002308 -0.0002292" solimp="0.9999 0.9999"/>
+    <joint joint1="vasti_r_vas_int_r-P3_y" joint2="knee_angle_r" polycoef="-0.2234 0.08578 0 0 0" solimp="0.9999 0.9999"/>
+    <joint joint1="vasti_r_vas_int_r-P3_z" joint2="knee_angle_r" polycoef="0.02673 0.01014 0 0 0" solimp="0.9999 0.9999"/>
+    <joint joint1="vasti_r_vas_int_r-P4_x" joint2="knee_angle_r" polycoef="0.05647 0.04555 0.01393 -0.007247 -0.004235" solimp="0.9999 0.9999"/>
+    <joint joint1="vasti_r_vas_int_r-P4_y" joint2="knee_angle_r" polycoef="0.02476 -0.006322 -0.00661 -0.003684 -0.0008973" solimp="0.9999 0.9999"/>
+    <joint joint1="gastroc_r_med_gas_r-P2_x" joint2="knee_angle_r" polycoef="-0.02915 -0.004849 0 0 0" solimp="0.9999 0.9999"/>
+    <joint joint1="gastroc_r_med_gas_r-P2_y" joint2="knee_angle_r" polycoef="-0.4015 -0.0041 0 0 0" solimp="0.9999 0.9999"/>
+    <joint joint1="gastroc_r_med_gas_r-P2_z" joint2="knee_angle_r" polycoef="-0.02562 -0.001014 0 0 0" solimp="0.9999 0.9999"/>
+    <joint joint1="iliopsoas_l_psoas_l-P3_x" joint2="hip_flexion_l" polycoef="-0.0288 0 0.00114 0 0" solimp="0.9999 0.9999"/>
+    <joint joint1="iliopsoas_l_psoas_l-P3_y" joint2="hip_flexion_l" polycoef="-0.0805 0 0.005359 0 0" solimp="0.9999 0.9999"/>
+    <joint joint1="iliopsoas_l_psoas_l-P3_z" joint2="hip_flexion_l" polycoef="-0.0816 0 0.0013 0 0" solimp="0.9999 0.9999"/>
+    <joint joint1="rect_fem_l_rect_fem_l-P3_x" joint2="knee_angle_l" polycoef="0.06259 0.04199 0.01152 -0.007248 -0.004008" solimp="0.9999 0.9999"/>
+    <joint joint1="rect_fem_l_rect_fem_l-P3_y" joint2="knee_angle_l" polycoef="0.02032 -0.01159 -0.008624 -0.002308 -0.0002292" solimp="0.9999 0.9999"/>
+    <joint joint1="vasti_l_vas_int_l-P3_y" joint2="knee_angle_l" polycoef="-0.2234 0.08578 0 0 0" solimp="0.9999 0.9999"/>
+    <joint joint1="vasti_l_vas_int_l-P3_z" joint2="knee_angle_l" polycoef="-0.02673 -0.01014 0 0 0" solimp="0.9999 0.9999"/>
+    <joint joint1="vasti_l_vas_int_l-P4_x" joint2="knee_angle_l" polycoef="0.05647 0.04555 0.01393 -0.007247 -0.004235" solimp="0.9999 0.9999"/>
+    <joint joint1="vasti_l_vas_int_l-P4_y" joint2="knee_angle_l" polycoef="0.02476 -0.006322 -0.00661 -0.003684 -0.0008973" solimp="0.9999 0.9999"/>
+    <joint joint1="gastroc_l_med_gas_l-P2_x" joint2="knee_angle_l" polycoef="-0.02915 -0.004849 0 0 0" solimp="0.9999 0.9999"/>
+    <joint joint1="gastroc_l_med_gas_l-P2_y" joint2="knee_angle_l" polycoef="-0.4015 -0.0041 0 0 0" solimp="0.9999 0.9999"/>
+    <joint joint1="gastroc_l_med_gas_l-P2_z" joint2="knee_angle_l" polycoef="0.02562 0.001014 0 0 0" solimp="0.9999 0.9999"/>
   </equality>
+
   <tendon>
     <spatial name="hamstrings_r_tendon">
       <site site="hamstrings_r_bifemlh_r-P1"/>
@@ -378,26 +388,28 @@
       <site site="tib_ant_l_tib_ant_l-P3"/>
     </spatial>
   </tendon>
+
   <actuator>
-    <general name="hamstrings_r" class="muscle" tendon="hamstrings_r_tendon" lengthrange="0.01 1" gainprm="0.75 1.05 2700 200 0.5 1.6 1.5 1.3 1.2 0" biasprm="0.75 1.05 2700 200 0.5 1.6 1.5 1.3 1.2 0"/>
-    <general name="bifemsh_r" class="muscle" tendon="bifemsh_r_tendon" lengthrange="0.01 1" gainprm="0.75 1.05 804 200 0.5 1.6 1.5 1.3 1.2 0" biasprm="0.75 1.05 804 200 0.5 1.6 1.5 1.3 1.2 0"/>
-    <general name="glut_max_r" class="muscle" tendon="glut_max_r_tendon" lengthrange="0.01 1" gainprm="0.75 1.05 1944 200 0.5 1.6 1.5 1.3 1.2 0" biasprm="0.75 1.05 1944 200 0.5 1.6 1.5 1.3 1.2 0"/>
-    <general name="iliopsoas_r" class="muscle" tendon="iliopsoas_r_tendon" lengthrange="0.01 1" gainprm="0.75 1.05 2342 200 0.5 1.6 1.5 1.3 1.2 0" biasprm="0.75 1.05 2342 200 0.5 1.6 1.5 1.3 1.2 0"/>
-    <general name="rect_fem_r" class="muscle" tendon="rect_fem_r_tendon" lengthrange="0.01 1" gainprm="0.75 1.05 1169 200 0.5 1.6 1.5 1.3 1.2 0" biasprm="0.75 1.05 1169 200 0.5 1.6 1.5 1.3 1.2 0"/>
-    <general name="vasti_r" class="muscle" tendon="vasti_r_tendon" lengthrange="0.01 1" gainprm="0.75 1.05 5000 200 0.5 1.6 1.5 1.3 1.2 0" biasprm="0.75 1.05 5000 200 0.5 1.6 1.5 1.3 1.2 0"/>
-    <general name="gastroc_r" class="muscle" tendon="gastroc_r_tendon" lengthrange="0.01 1" gainprm="0.75 1.05 2500 200 0.5 1.6 1.5 1.3 1.2 0" biasprm="0.75 1.05 2500 200 0.5 1.6 1.5 1.3 1.2 0"/>
-    <general name="soleus_r" class="muscle" tendon="soleus_r_tendon" lengthrange="0.01 1" gainprm="0.75 1.05 5137 200 0.5 1.6 1.5 1.3 1.2 0" biasprm="0.75 1.05 5137 200 0.5 1.6 1.5 1.3 1.2 0"/>
-    <general name="tib_ant_r" class="muscle" tendon="tib_ant_r_tendon" lengthrange="0.01 1" gainprm="0.75 1.05 3000 200 0.5 1.6 1.5 1.3 1.2 0" biasprm="0.75 1.05 3000 200 0.5 1.6 1.5 1.3 1.2 0"/>
-    <general name="hamstrings_l" class="muscle" tendon="hamstrings_l_tendon" lengthrange="0.01 1" gainprm="0.75 1.05 2700 200 0.5 1.6 1.5 1.3 1.2 0" biasprm="0.75 1.05 2700 200 0.5 1.6 1.5 1.3 1.2 0"/>
-    <general name="bifemsh_l" class="muscle" tendon="bifemsh_l_tendon" lengthrange="0.01 1" gainprm="0.75 1.05 804 200 0.5 1.6 1.5 1.3 1.2 0" biasprm="0.75 1.05 804 200 0.5 1.6 1.5 1.3 1.2 0"/>
-    <general name="glut_max_l" class="muscle" tendon="glut_max_l_tendon" lengthrange="0.01 1" gainprm="0.75 1.05 1944 200 0.5 1.6 1.5 1.3 1.2 0" biasprm="0.75 1.05 1944 200 0.5 1.6 1.5 1.3 1.2 0"/>
-    <general name="iliopsoas_l" class="muscle" tendon="iliopsoas_l_tendon" lengthrange="0.01 1" gainprm="0.75 1.05 2342 200 0.5 1.6 1.5 1.3 1.2 0" biasprm="0.75 1.05 2342 200 0.5 1.6 1.5 1.3 1.2 0"/>
-    <general name="rect_fem_l" class="muscle" tendon="rect_fem_l_tendon" lengthrange="0.01 1" gainprm="0.75 1.05 1169 200 0.5 1.6 1.5 1.3 1.2 0" biasprm="0.75 1.05 1169 200 0.5 1.6 1.5 1.3 1.2 0"/>
-    <general name="vasti_l" class="muscle" tendon="vasti_l_tendon" lengthrange="0.01 1" gainprm="0.75 1.05 5000 200 0.5 1.6 1.5 1.3 1.2 0" biasprm="0.75 1.05 5000 200 0.5 1.6 1.5 1.3 1.2 0"/>
-    <general name="gastroc_l" class="muscle" tendon="gastroc_l_tendon" lengthrange="0.01 1" gainprm="0.75 1.05 2500 200 0.5 1.6 1.5 1.3 1.2 0" biasprm="0.75 1.05 2500 200 0.5 1.6 1.5 1.3 1.2 0"/>
-    <general name="soleus_l" class="muscle" tendon="soleus_l_tendon" lengthrange="0.01 1" gainprm="0.75 1.05 5137 200 0.5 1.6 1.5 1.3 1.2 0" biasprm="0.75 1.05 5137 200 0.5 1.6 1.5 1.3 1.2 0"/>
-    <general name="tib_ant_l" class="muscle" tendon="tib_ant_l_tendon" lengthrange="0.01 1" gainprm="0.75 1.05 3000 200 0.5 1.6 1.5 1.3 1.2 0" biasprm="0.75 1.05 3000 200 0.5 1.6 1.5 1.3 1.2 0"/>
+    <general name="hamstrings_r" class="muscle" tendon="hamstrings_r_tendon" lengthrange="0.01 1" gainprm="0.75 1.05 2700" biasprm="0.75 1.05 2700"/>
+    <general name="bifemsh_r" class="muscle" tendon="bifemsh_r_tendon" lengthrange="0.01 1" gainprm="0.75 1.05 804" biasprm="0.75 1.05 804"/>
+    <general name="glut_max_r" class="muscle" tendon="glut_max_r_tendon" lengthrange="0.01 1" gainprm="0.75 1.05 1944" biasprm="0.75 1.05 1944"/>
+    <general name="iliopsoas_r" class="muscle" tendon="iliopsoas_r_tendon" lengthrange="0.01 1" gainprm="0.75 1.05 2342" biasprm="0.75 1.05 2342"/>
+    <general name="rect_fem_r" class="muscle" tendon="rect_fem_r_tendon" lengthrange="0.01 1" gainprm="0.75 1.05 1169" biasprm="0.75 1.05 1169"/>
+    <general name="vasti_r" class="muscle" tendon="vasti_r_tendon" lengthrange="0.01 1" gainprm="0.75 1.05 5000" biasprm="0.75 1.05 5000"/>
+    <general name="gastroc_r" class="muscle" tendon="gastroc_r_tendon" lengthrange="0.01 1" gainprm="0.75 1.05 2500" biasprm="0.75 1.05 2500"/>
+    <general name="soleus_r" class="muscle" tendon="soleus_r_tendon" lengthrange="0.01 1" gainprm="0.75 1.05 5137" biasprm="0.75 1.05 5137"/>
+    <general name="tib_ant_r" class="muscle" tendon="tib_ant_r_tendon" lengthrange="0.01 1" gainprm="0.75 1.05 3000" biasprm="0.75 1.05 3000"/>
+    <general name="hamstrings_l" class="muscle" tendon="hamstrings_l_tendon" lengthrange="0.01 1" gainprm="0.75 1.05 2700" biasprm="0.75 1.05 2700"/>
+    <general name="bifemsh_l" class="muscle" tendon="bifemsh_l_tendon" lengthrange="0.01 1" gainprm="0.75 1.05 804" biasprm="0.75 1.05 804"/>
+    <general name="glut_max_l" class="muscle" tendon="glut_max_l_tendon" lengthrange="0.01 1" gainprm="0.75 1.05 1944" biasprm="0.75 1.05 1944"/>
+    <general name="iliopsoas_l" class="muscle" tendon="iliopsoas_l_tendon" lengthrange="0.01 1" gainprm="0.75 1.05 2342" biasprm="0.75 1.05 2342"/>
+    <general name="rect_fem_l" class="muscle" tendon="rect_fem_l_tendon" lengthrange="0.01 1" gainprm="0.75 1.05 1169" biasprm="0.75 1.05 1169"/>
+    <general name="vasti_l" class="muscle" tendon="vasti_l_tendon" lengthrange="0.01 1" gainprm="0.75 1.05 5000" biasprm="0.75 1.05 5000"/>
+    <general name="gastroc_l" class="muscle" tendon="gastroc_l_tendon" lengthrange="0.01 1" gainprm="0.75 1.05 2500" biasprm="0.75 1.05 2500"/>
+    <general name="soleus_l" class="muscle" tendon="soleus_l_tendon" lengthrange="0.01 1" gainprm="0.75 1.05 5137" biasprm="0.75 1.05 5137"/>
+    <general name="tib_ant_l" class="muscle" tendon="tib_ant_l_tendon" lengthrange="0.01 1" gainprm="0.75 1.05 3000" biasprm="0.75 1.05 3000"/>
   </actuator>
+
   <keyframe>
     <key name="default-pose" qpos="0 0.95 0 0 -0.003639 -0.3957 0 0 0.06259 0.02032 0.05647 0.02476 -0.2234 0.02673 -0.02915 -0.4015 -0.02562 0 -0.003639 -0.3957 0 0 0.06259 0.02032 0.05647 0.02476 -0.2234 -0.02673 -0.02915 -0.4015 0.02562 0 -0.0288 -0.0805 0.0816 -0.0288 -0.0805 -0.0816"/>
   </keyframe>

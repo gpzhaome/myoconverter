@@ -6,7 +6,6 @@
   <compiler inertiafromgeom="auto" angle="radian" balanceinertia="true" boundmass="0.001" boundinertia="0.001" inertiagrouprange="0 1">
     <lengthrange inttotal="50" useexisting="true"/>
   </compiler>
-  <option collision="predefined"/>
   <visual>
     <scale framelength="0.5" framewidth="0.01"/>
   </visual>
@@ -40,25 +39,25 @@
       <joint name="pelvis_tx" range="-5 5" limited="true" user="0.0" ref="0" axis="1 0 0" type="slide" damping="0" stiffness="0"/>
       <joint name="pelvis_ty" range="-1 2" limited="true" user="0.95" ref="0" axis="0 1 0" type="slide" damping="0" stiffness="0"/>
       <joint name="pelvis_tilt" range="-1.571 1.571" limited="true" user="0.0" ref="0" axis="0 0 1" type="hinge" damping="0" stiffness="0"/>
-      <body name="femur_r" pos="-0.0707 -0.0661 0.0835" euler="0 0 0">
+      <body name="femur_r" pos="-0.0707 -0.0661 0.0835" euler="-0 0 0">
         <inertial mass="9.3013999999999992" pos="0 -0.17000000000000001 0" fullinertia="0.13389999999999999 0.035099999999999999 0.14119999999999999 0 0 0"/>
         <geom name="femur_r_geom_1" type="mesh" mesh="femur_r_geom_1_femur_r" rgba="1 1 1 1" group="0"/>
         <joint name="hip_flexion_r" range="-2.094 2.094" limited="true" user="0.0" ref="0" type="hinge" axis="0 0 1"/>
-        <body name="tibia_r" pos="0 0 0" euler="0 0 0">
+        <body name="tibia_r" pos="0 0 0" euler="-0 0 0">
           <inertial mass="3.7075" pos="0 -0.1867 0" fullinertia="0.0504 0.0051000000000000004 0.0511 0 0 0"/>
           <geom name="tibia_r_geom_1" type="mesh" mesh="tibia_r_geom_1_tibia_r" rgba="1 1 1 1" group="0"/>
           <geom name="tibia_r_geom_2" type="mesh" mesh="tibia_r_geom_2_fibula" rgba="1 1 1 1" group="0"/>
           <joint name="knee_r_translation1" range="-0.005574 0.00411" limited="true" user="-0.0036392466304026026" ref="0" axis="1 0 0" type="slide"/>
           <joint name="knee_r_translation2" range="-0.4226 -0.3953" limited="true" user="-0.39571344513759116" ref="0" axis="0 1 0" type="slide"/>
           <joint name="knee_angle_r" range="-2.094 0.1745" limited="true" user="0.0" ref="0" axis="0 0 1" type="hinge"/>
-          <body name="talus_r" pos="0 -0.43 0" euler="0 0 0">
+          <body name="talus_r" pos="0 -0.43 0" euler="-0 0 0">
             <inertial mass="0.10000000000000001" pos="0 0 0" fullinertia="0.001 0.001 0.001 0 0 0"/>
             <geom name="talus_r_geom_1" type="mesh" mesh="talus_r_geom_1_talus" rgba="1 1 1 1" group="0"/>
             <joint name="ankle_angle_r" range="-1.571 1.571" limited="true" user="0.0" ref="0" type="hinge" axis="0 0 1"/>
-            <body name="calcn_r" pos="-0.04877 -0.04195 0.00792" euler="0 0 0">
+            <body name="calcn_r" pos="-0.04877 -0.04195 0.00792" euler="-0 0 0">
               <inertial mass="1.25" pos="0.10000000000000001 0.029999999999999999 0" fullinertia="0.0014 0.0038999999999999998 0.0041000000000000003 0 0 0"/>
               <geom name="calcn_r_geom_1" type="mesh" mesh="calcn_r_geom_1_foot" rgba="1 1 1 1" group="0"/>
-              <body name="toes_r" pos="0.1788 -0.002 0.00108" euler="0 0 0">
+              <body name="toes_r" pos="0.1788 -0.002 0.00108" euler="-0 0 0">
                 <inertial mass="0.21659999999999999" pos="0.034599999999999999 0.0060000000000000001 -0.017500000000000002" fullinertia="0.0001 0.00020000000000000001 0.0001 0 0 0"/>
                 <geom name="toes_r_geom_1" type="mesh" mesh="toes_r_geom_1_bofoot" rgba="1 1 1 1" group="0"/>
               </body>
@@ -110,25 +109,25 @@
           <site name="gastroc_r_med_gas_r-P2"/>
         </body>
       </body>
-      <body name="femur_l" pos="-0.0707 -0.0661 -0.0835" euler="0 0 0">
+      <body name="femur_l" pos="-0.0707 -0.0661 -0.0835" euler="-0 0 0">
         <inertial mass="9.3013999999999992" pos="0 -0.17000000000000001 0" fullinertia="0.13389999999999999 0.035099999999999999 0.14119999999999999 0 0 0"/>
         <geom name="femur_l_geom_1" type="mesh" mesh="femur_l_geom_1_femur_l" rgba="1 1 1 1" group="0"/>
         <joint name="hip_flexion_l" range="-2.094 2.094" limited="true" user="0.0" ref="0" type="hinge" axis="0 0 1"/>
-        <body name="tibia_l" pos="0 0 0" euler="0 0 0">
+        <body name="tibia_l" pos="0 0 0" euler="-0 0 0">
           <inertial mass="3.7075" pos="0 -0.1867 0" fullinertia="0.0504 0.0051000000000000004 0.0511 0 0 0"/>
           <geom name="tibia_l_geom_1" type="mesh" mesh="tibia_l_geom_1_tibia_l" rgba="1 1 1 1" group="0"/>
           <geom name="tibia_l_geom_2" type="mesh" mesh="tibia_l_geom_2_l_fibula" rgba="1 1 1 1" group="0"/>
           <joint name="knee_l_translation1" range="-0.005574 0.00411" limited="true" user="-0.0036392466304026026" ref="0" axis="1 0 0" type="slide"/>
           <joint name="knee_l_translation2" range="-0.4226 -0.3953" limited="true" user="-0.39571344513759116" ref="0" axis="0 1 0" type="slide"/>
           <joint name="knee_angle_l" range="-2.094 0.1745" limited="true" user="0.0" ref="0" axis="0 0 1" type="hinge"/>
-          <body name="talus_l" pos="0 -0.43 0" euler="0 0 0">
+          <body name="talus_l" pos="0 -0.43 0" euler="-0 0 0">
             <inertial mass="0.10000000000000001" pos="0 0 0" fullinertia="0.001 0.001 0.001 0 0 0"/>
             <geom name="talus_l_geom_1" type="mesh" mesh="talus_l_geom_1_l_talus" rgba="1 1 1 1" group="0"/>
             <joint name="ankle_angle_l" range="-1.571 1.571" limited="true" user="0.0" ref="0" type="hinge" axis="0 0 1"/>
-            <body name="calcn_l" pos="-0.04877 -0.04195 -0.00792" euler="0 0 0">
+            <body name="calcn_l" pos="-0.04877 -0.04195 -0.00792" euler="-0 0 0">
               <inertial mass="1.25" pos="0.10000000000000001 0.029999999999999999 0" fullinertia="0.0014 0.0038999999999999998 0.0041000000000000003 0 0 0"/>
               <geom name="calcn_l_geom_1" type="mesh" mesh="calcn_l_geom_1_l_foot" rgba="1 1 1 1" group="0"/>
-              <body name="toes_l" pos="0.1788 -0.002 -0.00108" euler="0 0 0">
+              <body name="toes_l" pos="0.1788 -0.002 -0.00108" euler="-0 0 0">
                 <inertial mass="0.21659999999999999" pos="0.034599999999999999 0.0060000000000000001 0.017500000000000002" fullinertia="0.0001 0.00020000000000000001 0.0001 0 0 0"/>
                 <geom name="toes_l_geom_1" type="mesh" mesh="toes_l_geom_1_l_bofoot" rgba="1 1 1 1" group="0"/>
               </body>
@@ -180,7 +179,7 @@
           <site name="gastroc_l_med_gas_l-P2"/>
         </body>
       </body>
-      <body name="torso" pos="-0.1007 0.0815 0" euler="0 0 0">
+      <body name="torso" pos="-0.1007 0.0815 0" euler="-0 0 0">
         <inertial mass="34.236600000000003" pos="-0.029999999999999999 0.32000000000000001 0" fullinertia="1.4744999999999999 0.75549999999999995 1.4314 0 0 0"/>
         <geom name="torso_geom_1" type="mesh" mesh="torso_geom_1_hat_spine" rgba="1 1 1 1" group="0"/>
         <geom name="torso_geom_2" type="mesh" mesh="torso_geom_2_hat_jaw" rgba="1 1 1 1" group="0"/>
@@ -218,25 +217,25 @@
   </worldbody>
   <asset>
     <texture type="skybox" builtin="gradient" rgb1="1 1 1" rgb2="0.6 0.8 1" width="256" height="256"/>
-    <mesh name="pelvis_geom_1_sacrum" file="Geometry/sacrum.stl" scale="1 1 1"/>
-    <mesh name="pelvis_geom_2_pelvis" file="Geometry/pelvis.stl" scale="1 1 1"/>
-    <mesh name="pelvis_geom_3_l_pelvis" file="Geometry/l_pelvis.stl" scale="1 1 1"/>
-    <mesh name="femur_r_geom_1_femur_r" file="Geometry/femur_r.stl" scale="1 1 1"/>
-    <mesh name="tibia_r_geom_1_tibia_r" file="Geometry/tibia_r.stl" scale="1 1 1"/>
-    <mesh name="tibia_r_geom_2_fibula" file="Geometry/fibula.stl" scale="1 1 1"/>
-    <mesh name="talus_r_geom_1_talus" file="Geometry/talus.stl" scale="1 1 1"/>
-    <mesh name="calcn_r_geom_1_foot" file="Geometry/foot.stl" scale="1 1 1"/>
-    <mesh name="toes_r_geom_1_bofoot" file="Geometry/bofoot.stl" scale="1 1 1"/>
-    <mesh name="femur_l_geom_1_femur_l" file="Geometry/femur_l.stl" scale="1 1 1"/>
-    <mesh name="tibia_l_geom_1_tibia_l" file="Geometry/tibia_l.stl" scale="1 1 1"/>
-    <mesh name="tibia_l_geom_2_l_fibula" file="Geometry/l_fibula.stl" scale="1 1 1"/>
-    <mesh name="talus_l_geom_1_l_talus" file="Geometry/l_talus.stl" scale="1 1 1"/>
-    <mesh name="calcn_l_geom_1_l_foot" file="Geometry/l_foot.stl" scale="1 1 1"/>
-    <mesh name="toes_l_geom_1_l_bofoot" file="Geometry/l_bofoot.stl" scale="1 1 1"/>
-    <mesh name="torso_geom_1_hat_spine" file="Geometry/hat_spine.stl" scale="1 1 1"/>
-    <mesh name="torso_geom_2_hat_jaw" file="Geometry/hat_jaw.stl" scale="1 1 1"/>
-    <mesh name="torso_geom_3_hat_skull" file="Geometry/hat_skull.stl" scale="1 1 1"/>
-    <mesh name="torso_geom_4_hat_ribs" file="Geometry/hat_ribs.stl" scale="1 1 1"/>
+    <mesh name="pelvis_geom_1_sacrum" file="Geometry\sacrum.stl" scale="1 1 1"/>
+    <mesh name="pelvis_geom_2_pelvis" file="Geometry\pelvis.stl" scale="1 1 1"/>
+    <mesh name="pelvis_geom_3_l_pelvis" file="Geometry\l_pelvis.stl" scale="1 1 1"/>
+    <mesh name="femur_r_geom_1_femur_r" file="Geometry\femur_r.stl" scale="1 1 1"/>
+    <mesh name="tibia_r_geom_1_tibia_r" file="Geometry\tibia_r.stl" scale="1 1 1"/>
+    <mesh name="tibia_r_geom_2_fibula" file="Geometry\fibula.stl" scale="1 1 1"/>
+    <mesh name="talus_r_geom_1_talus" file="Geometry\talus.stl" scale="1 1 1"/>
+    <mesh name="calcn_r_geom_1_foot" file="Geometry\foot.stl" scale="1 1 1"/>
+    <mesh name="toes_r_geom_1_bofoot" file="Geometry\bofoot.stl" scale="1 1 1"/>
+    <mesh name="femur_l_geom_1_femur_l" file="Geometry\femur_l.stl" scale="1 1 1"/>
+    <mesh name="tibia_l_geom_1_tibia_l" file="Geometry\tibia_l.stl" scale="1 1 1"/>
+    <mesh name="tibia_l_geom_2_l_fibula" file="Geometry\l_fibula.stl" scale="1 1 1"/>
+    <mesh name="talus_l_geom_1_l_talus" file="Geometry\l_talus.stl" scale="1 1 1"/>
+    <mesh name="calcn_l_geom_1_l_foot" file="Geometry\l_foot.stl" scale="1 1 1"/>
+    <mesh name="toes_l_geom_1_l_bofoot" file="Geometry\l_bofoot.stl" scale="1 1 1"/>
+    <mesh name="torso_geom_1_hat_spine" file="Geometry\hat_spine.stl" scale="1 1 1"/>
+    <mesh name="torso_geom_2_hat_jaw" file="Geometry\hat_jaw.stl" scale="1 1 1"/>
+    <mesh name="torso_geom_3_hat_skull" file="Geometry\hat_skull.stl" scale="1 1 1"/>
+    <mesh name="torso_geom_4_hat_ribs" file="Geometry\hat_ribs.stl" scale="1 1 1"/>
   </asset>
   <tendon>
     <!-- Leave this comment here to make 'tendon' element pretty printed !-->

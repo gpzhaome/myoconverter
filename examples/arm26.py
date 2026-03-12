@@ -1,30 +1,34 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-This script includes all the steps of transfering an OpenSim model to Mujoco.
+Run the full OpenSim-to-MuJoCo conversion pipeline for the Arm26 example.
 
 Created on Tue Jul 27 23:19:13 2021
 
 @author: hwang
-
 """
+
 from myoconverter.O2MPipeline import O2MPipeline
 
-# define pipline configurations
-kwargs = {}  # define kwargs inputs
-kwargs['convert_steps'] = [1, 2, 3]    # All three steps selected
-kwargs['muscle_list'] = None           # No specific muscle selected, optimize all of them
-kwargs['osim_data_overwrite'] = True   # Overwrite the Osim model state files
-kwargs['conversion'] = True            # Yes, perform 'Cvt#' process
-kwargs['validation'] = True            # Yes, perform 'Vlt#' process
-kwargs['speedy'] = False                # Do not reduce the checking notes to increase speed
-kwargs['generate_pdf'] = True          # Do not generate validation pdf report
-kwargs['add_ground_geom'] = True       # Add ground to the model
-kwargs['treat_as_normal_path_point'] = False    # Using constraints to represent moving and conditional path points
+
+# Define pipeline configuration.
+kwargs = {}
+kwargs["convert_steps"] = [1, 2, 3]          # Run all three conversion steps.
+kwargs["muscle_list"] = None                 # Optimize all muscles.
+kwargs["osim_data_overwrite"] = True         # Regenerate cached OpenSim state data.
+kwargs["conversion"] = True                  # Run the conversion steps.
+kwargs["validation"] = True                  # Run the validation steps.
+kwargs["speedy"] = False                     # Keep the full optimization settings.
+kwargs["generate_pdf"] = True                # Generate the validation PDF report.
+kwargs["add_ground_geom"] = True             # Add a ground geometry to the converted model.
+kwargs["treat_as_normal_path_point"] = False # Keep moving and conditional path points dynamic.
 
 
-############### Simple Arm 2 DoFs 6 Muscles ################ 
-osim_file = './models/osim/Arm26/arm26.osim'
-geometry_folder = './models/osim/Arm26/Geometry'
-output_folder = './models/mjc/Arm26'
-O2MPipeline(osim_file, geometry_folder, output_folder, **kwargs)
+# Arm26 example
+osim_file = "./models/osim/Arm26/arm26.osim"
+geometry_folder = "./models/osim/Arm26/Geometry"
+output_folder = "./models/mjc/Arm26"
+
+
+if __name__ == "__main__":
+    O2MPipeline(osim_file, geometry_folder, output_folder, **kwargs)
